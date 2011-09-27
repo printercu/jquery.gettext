@@ -24,49 +24,58 @@ Requirements:
 Sample javascript code:
 -----------------------
 
-    function write(txt) {
-        $("#console").append(txt + "&lt;br/&gt;")
-    }
-    write(_("Humpty Dumpty sat on a wall,"));
-    write(_("Humpty Dumpty had a great fall."));
-    write(_("All the king's horses, And all the king's men,"));
-    write(_("Couldn't put Humpty together again."));
+```javascript
+function write(txt) {
+    $("#console").append(txt + "&lt;br/&gt;")
+}
+write(_("Humpty Dumpty sat on a wall,"));
+write(_("Humpty Dumpty had a great fall."));
+write(_("All the king's horses, And all the king's men,"));
+write(_("Couldn't put Humpty together again."));
+```
 
 
 Setup needed in the HTML document:
 ----------------------------------
 
-    <html lang="fr">
-        <link href="javascript.en.json" lang="en" rel="gettext" />
-        <link href="javascript.fr.json" lang="fr" rel="gettext" />
+```html
+<html lang="fr">
+    <link href="javascript.en.json" lang="en" rel="gettext" />
+    <link href="javascript.fr.json" lang="fr" rel="gettext" />
+```
 
-
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript" src="jquery.gettext.js"></script>
-    <script type="text/javascript">$.gt.load();</script>
-    <script type="text/javascript" src="test.js"></script>
+```html
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery.gettext.js"></script>
+<script type="text/javascript">$.gt.load();</script>
+<script type="text/javascript" src="test.js"></script>
+```
 
 
 Console command and expected output:
 ------------------------------------
 
-    C:\gettext> makemessages.bat
-    Extracting keys from javascript code
-    Merging new keys with existing keys
-    Converting message files to binary
-    0 translated messages, 4 untranslated messages.
-    4 translated messages.
-    Converting binary files to JSON
-    Removing temp files
+```
+C:\gettext> makemessages.bat
+Extracting keys from javascript code
+Merging new keys with existing keys
+Converting message files to binary
+0 translated messages, 4 untranslated messages.
+4 translated messages.
+Converting binary files to JSON
+Removing temp files
+```
 
 
 Resulting JSON files:
 ---------------------
 
-    {
-    "": "Project-Id-Version: \nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2009-01-29 14:30-0500\nPO-Revision-Date: 2009-01-30 11:05-0500\nLast-Translator: John Doe <john.doe@shopmedia.com>\nLanguage-Team: fr <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\n", 
-    "Couldn't put Humpty together again.": "Ne purent jamais Remonter Humpty.", 
-    "Humpty Dumpty sat on a wall,": "Humpty Dumpty s'assit sur le mur,", 
-    "All the king's horses, And all the king's men,": "Tous les chevaux du roi, Et tous les soldats du roi", 
-    "Humpty Dumpty had a great fall.": "Humpty Dumpty se cassa la figure."
-    }
+```javascript
+{
+"": "Project-Id-Version: \nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2009-01-29 14:30-0500\nPO-Revision-Date: 2009-01-30 11:05-0500\nLast-Translator: John Doe <john.doe@shopmedia.com>\nLanguage-Team: fr <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\n", 
+"Couldn't put Humpty together again.": "Ne purent jamais Remonter Humpty.", 
+"Humpty Dumpty sat on a wall,": "Humpty Dumpty s'assit sur le mur,", 
+"All the king's horses, And all the king's men,": "Tous les chevaux du roi, Et tous les soldats du roi", 
+"Humpty Dumpty had a great fall.": "Humpty Dumpty se cassa la figure."
+}
+```
