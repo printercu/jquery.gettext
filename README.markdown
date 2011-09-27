@@ -10,8 +10,8 @@ parsing and conversion steps. After this command is executed, a JSON file is
 available and can be used via a jQuery plugin.
 
 
-Requirements:
--------------
+Requirements
+------------
 
 - [Gettext][]
 - [Python 2.5x or 2.6x][Python]
@@ -21,8 +21,8 @@ Requirements:
 [Python]: http://www.python.org/
 
 
-Sample javascript code:
------------------------
+Sample javascript code
+----------------------
 
 ```javascript
 function write(txt) {
@@ -35,8 +35,8 @@ write(_("Couldn't put Humpty together again."));
 ```
 
 
-Setup needed in the HTML document:
-----------------------------------
+Setup needed in the HTML document
+---------------------------------
 
 ```html
 <html lang="fr">
@@ -52,8 +52,8 @@ Setup needed in the HTML document:
 ```
 
 
-Console command and expected output:
-------------------------------------
+Console command and expected output
+-----------------------------------
 
 ```
 C:\gettext> makemessages.bat
@@ -67,8 +67,8 @@ Removing temp files
 ```
 
 
-Resulting JSON files:
----------------------
+Resulting JSON files
+--------------------
 
 ```javascript
 {
