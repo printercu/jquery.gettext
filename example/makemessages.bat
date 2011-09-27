@@ -14,8 +14,8 @@ msgfmt -v -o locales\fr\LC_MESSAGES\javascript.mo  locales\fr\LC_MESSAGES\javasc
 
 echo Converting binary files to JSON
 rem Usage:  mo2json.py domain . locale output-filename
-python mo2json.py javascript locales en javascript.en.json
-python mo2json.py javascript locales fr javascript.fr.json
+python ..\mo2json.py javascript locales en javascript.en.json
+python ..\mo2json.py javascript locales fr javascript.fr.json
 
 echo Removing temp files
 del locales\en\LC_MESSAGES\javascript.pot

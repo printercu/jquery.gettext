@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 try:
     import json
 except:
@@ -26,7 +27,7 @@ def gettext_json(domain, path, lang=[], indent=False):
 
 
 def main():
-    domain, path, locale, filename = sys.argv
+    domain, path, locale, filename = sys.argv[1:]
     result = gettext_json(domain, path, [locale])
     fileout = open(filename, "w")
     fileout.write(result)
