@@ -14,7 +14,7 @@ Requirements
 ------------
 
 - [Gettext][]
-- [Python 2.5x or 2.6x][Python]
+- [Python 2.5 or later][Python] (not compatible with Python 3.x)
 
 
 [Gettext]: http://www.gnu.org/software/gettext/
