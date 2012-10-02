@@ -47,61 +47,43 @@
  *       helpful when your application is big and you have hundreds of strings
  */
 (function($) {
-	$.gt = $.gt || {};
-
-	$.extend($.gt, {
-		messages: {},
-		lang: 'C',
-		setLang: function(code) { $.gt.lang = typeof code == 'string' && code != ' ' ? code : 'C'; },
-		pl_re: /^Plural-Forms:\s*nplurals\s*=\s*(\d+);\s*plural\s*=\s*([^a-zA-Z0-9\$]*([a-zA-Z0-9\$]+).+)$/m,
-		plural: function(n) {return n != 1;},
-		load: function() {
-			$('link[rel=gettext]').each(function(){
-				var lang = this.lang;
-				$.get(this.href, function(data){
-					$.gt.messages[lang] = $.gt.messages[lang] || {};
+	var messages	= {},
+		pl_re		= /^Plural-Forms:\s*nplurals\s*=\s*(\d+);\s*plural\s*=\s*([^a-zA-Z0-9\$]*([a-zA-Z0-9\$]+).+)$/m,
+		plural		= function(n) {return n != 1;},
+		path		= '/locale/%lng%/LC_MESSAGES/default.json';
+	
+	$.gt = {
+		setPath: function(p) { path = p; return this; },
+		load: function(lang, success, error) {
+			var xhr = $.getJSON(path.replace('%lng%', lang), function(data){
+				messages = data;
+				var pl = pl_re.exec(messages['']);
+				if(pl){
+					var np = pl[1], expr = pl[2], v = pl[3];
 					try {
-						var messages = eval('(' + data + ')');
-					} catch(e) {
-						return;
-					}
-
-					$.extend($.gt.messages[lang], messages);
-
-					var pl = $.gt.pl_re.exec($.gt.messages[lang]['']);
-					if(pl){
-						var expr = pl[2];
-						var np = pl[1];
-						var v = pl[3];
-						try {
-							var fn = eval('(function(' + v + ') {return ' + expr + ';})');
-						} catch(e) {
-							return;
-						}
-						$.gt.plural = fn;
-					}
-				});
-			});
-			$.gt.setLang($('html').attr('lang'));
+						plural = eval('(function(' + v + ') {return ' + expr + ';})');
+					} catch(e) {}
+				}
+				if (success) success.call(this)
+			})
+			if (error) xhr.error(error)
+			return true;
 		},
 		gettext: function(msgstr) {
-			var lang = $.gt.lang;
-			
-			if(lang == 'C' || typeof $.gt.messages[lang] == 'undefined') {
+			if(typeof messages == 'undefined')
 				return msgstr;
-			}
-
-			var trans = $.gt.messages[lang][msgstr];
-
+			
+			var trans = messages[msgstr];
+			//console.log(trans)
 			if(typeof trans == 'string') { // regular action
 				return trans;
-			} else if(typeof trans == 'object' && trans.constructor == Array) { // the translation contains plural(s), yet gettext was called
+			} else if(typeof trans == 'object' && trans.constructor == Array) {
+				// the translation contains plural(s), yet gettext was called
 				return trans[0];
 			}
 			return msgstr;
 		},
 		ngettext: function() {
-			var lang = $.gt.lang;
 			var argv = Array.apply(null, arguments);
 			var cnt = argv[argv.length - 1];
 			var sg = argv[0];
@@ -109,36 +91,20 @@
 			
 			var trans = pls;
 
-			if(lang != 'C' && typeof $.gt.messages[lang] != 'undefined') {
-				trans = $.gt.messages[lang][sg];
+			if(lang !== null && typeof messages[lang] != 'undefined') {
+				trans = messages[lang][sg];
 			}
 
 			if(typeof trans == 'string') { // called ngettext, but no plural forms available :-?
 				return trans;
 			} else if(typeof trans == 'object' && trans.constructor == Array) {
-				var pl = $.gt.plural(cnt);
-				if(typeof pl == 'boolean' && pls.length == 2) {
+				var pl = plural(cnt);
+				if(typeof pl == 'boolean' && pls.length == 2)
 					pl = pl ? 1 : 0;
-				}
-				if(typeof pl == 'number' && pl < trans.length) {
+				if(typeof pl == 'number' && pl < trans.length)
 					return trans[pl];
-				}
 			}
 			return sg;
 		}
-	});
-
-	// The following initialisation method has been taken ou of the "ready" event
-	// to prevent problems with the loading sequence. Just make sure the gettext plugin
-	// is called before other scripts who need localization
-	//$('document').ready($.gt.load);
-	$.gt.load();
-	
-})(jQuery);
-
-if(typeof _ == 'undefined') {
-	var _ = jQuery.gt.gettext;
-}
-if(typeof n_ == 'undefined') {
-	var n_ = jQuery.gt.ngettext;
-}
+	}
+})(jQuery)
