@@ -54,16 +54,20 @@
 	
 	$.gt = {
 		setPath: function(p) { path = p; return this; },
+		loadData: function(data)
+		{
+			messages = data;
+			var pl = pl_re.exec(messages['']);
+			if(pl){
+				var np = pl[1], expr = pl[2], v = pl[3];
+				try {
+					plural = eval('(function(' + v + ') {return ' + expr + ';})');
+				} catch(e) {}
+			}
+		},
 		load: function(lang, success, error) {
 			var xhr = $.getJSON(path.replace('%lng%', lang), function(data){
-				messages = data;
-				var pl = pl_re.exec(messages['']);
-				if(pl){
-					var np = pl[1], expr = pl[2], v = pl[3];
-					try {
-						plural = eval('(function(' + v + ') {return ' + expr + ';})');
-					} catch(e) {}
-				}
+				$.gt.loadData(data)
 				if (success) success.call(this)
 			})
 			if (error) xhr.error(error)
