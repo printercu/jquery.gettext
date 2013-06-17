@@ -129,5 +129,10 @@ if module?.exports
   module.exports = Gettext
 
 if jQuery?
-  jQuery.Gettext = Gettext
-  jQuery.gt = new Gettext()
+  do ($ = jQuery) ->
+    $.Gettext = Gettext
+    $.gt = new Gettext()
+    lang  = $('html').attr('lang')
+    link  = $("link[rel=\"gettext\"][lang=\"#{lang}\"]")
+    if link.length
+      Gettext.ajaxLoad link.attr('href'), (gt) -> $.gt = gt
