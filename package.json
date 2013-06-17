@@ -1,0 +1,31 @@
+{
+  "name": "jquery.gettext",
+  "version": "0.0.1",
+  "description": "Simple gettext library.",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/printercu/jquery.gettext.git"
+  },
+  "keywords": [
+    "i18n",
+    "gettext"
+  ],
+  "author": "Sabin Iacob <iacobs@m0n5t3r.info>",
+  "contributors": [
+    "Eunchong Yu <kroisse@gmail.com>",
+    "Max Melentiev <melentievm@gmail.com>"
+  ],
+  "license": "GPL",
+  "readmeFilename": "README.markdown",
+  "devDependencies": {
+    "mocha": "*",
+    "coffee-script": "*"
+  }
+}

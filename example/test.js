@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	function _(str) { return $.gt.gettext(str) }
 
 	function write(txt) {
 		$("#console").append(txt + "<br/>")
@@ -8,5 +9,4 @@ $(document).ready(function(){
 	write(_("Humpty Dumpty had a great fall."));
 	write(_("All the king's horses, And all the king's men,"));
 	write(_("Couldn't put Humpty together again."));
-
 })
