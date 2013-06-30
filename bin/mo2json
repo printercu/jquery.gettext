@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+import sys
+import gettext
+try:
+  import simplejson as json
+except:
+  sys.stderr.write("""\
+simplejson module is not instaled.
+Try to install:
+  # easy_install simplejson\n""".format(sys.argv[0]))
+  exit(255)
+
+def mo2hash(domain, path, lang = []):
+  translations = gettext.translation(domain, path, lang)
+  keys = translations._catalog.keys()
+  keys.sort()
+  result = {}
+  for key in keys:
+    value = translations._catalog[key]
+    if type(key) is tuple:
+      if key[0] not in result:
+        result[key[0]] = []
+      result[key[0]].append(value)
+    else:
+      result[key] = value
+  return result
+
+if len(sys.argv) < 4:
+  sys.stderr.write("""\
+Usage:
+  {0} domain locales_dir language
+
+Locale's path format:
+  :locales_dir/:language/LC_MESSAGES/:domain.mo\n""".format(sys.argv[0]))
+  exit(255)
+
+try:
+  translations = mo2hash(sys.argv[1], sys.argv[2], [sys.argv[3]])
+  print json.dumps(translations, ensure_ascii = False).encode('utf-8')
+except IOError as (errno, strerror):
+    sys.stderr.write("I/O error({0}): {1}\n".format(errno, strerror))

@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Simple gettext library.",
   "main": "index.js",
+  "bin": {
+    "mo2json": "./bin/mo2json"
+  },
   "directories": {
     "example": "example"
   },
