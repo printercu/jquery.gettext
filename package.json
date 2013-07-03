@@ -2,7 +2,7 @@
   "name": "jquery.gettext",
   "version": "0.0.1",
   "description": "Simple gettext library.",
-  "main": "index.js",
+  "main": "index.coffee",
   "bin": {
     "mo2json": "./bin/mo2json",
     "mo2json-all": "./bin/mo2json-all"

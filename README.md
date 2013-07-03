@@ -9,6 +9,13 @@ It take the form of a single console command which goes through multiple
 parsing and conversion steps. After this command is executed, a JSON file is
 available and can be used via a jQuery plugin.
 
+## No js version
+`cake build` to get it.
+
+## mo2json-all
+Will create json files for all domains for all languages in some folder.
+
+Translations filename format: `:locales_dir/:language/LC_MESSAGES/:domain.mo`.
 
 Requirements
 ------------
