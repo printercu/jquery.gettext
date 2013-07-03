@@ -58,10 +58,15 @@ isArray = (obj) ->
   typeof obj is 'object' and obj.constructor is Array
 
 class Gettext
-  @interpolate: (str, lang) ->
-    str.replace(/:lang/g, lang)
+  @defaultDomain: 'default'
 
-  @ajaxPath: '/locale/:lang/LC_MESSAGES/default.json'
+  @interpolate: (str, options) ->
+    options = lang: options if typeof options is 'string'
+    {lang, domain} = options
+    domain ||= @defaultDomain
+    str.replace(/:lang/g, lang).replace(/:domain/g, domain)
+
+  @ajaxPath: '/locale/:lang/LC_MESSAGES/:domain.json'
 
   @ajaxLoad: (file, success, error) ->
     xhr = jQuery.getJSON(file, (data) ->
@@ -71,8 +76,8 @@ class Gettext
     xhr.error error if error
     xhr
 
-  @ajaxLoadLang: (lang, args...) ->
-    @ajaxLoad @interpolate(@ajaxPath, lang), args...
+  @ajaxLoadLang: (options, args...) ->
+    @ajaxLoad @interpolate(@ajaxPath, options), args...
 
   @fsPath: ''
 
@@ -85,14 +90,14 @@ class Gettext
         return callback e
       callback null, new @(data)
 
-  @loadLangFile: (lang, callback) ->
-    @loadFile @interpolate(@fsPath, lang), callback
+  @loadLangFile: (options, callback) ->
+    @loadFile @interpolate(@fsPath, options), callback
 
   @loadFileSync: (file) ->
     new @(JSON.parse require('fs').readFileSync file)
 
-  @loadLangFileSync: (lang) ->
-    @loadFileSync @interpolate(@fsPath, lang)
+  @loadLangFileSync: (options) ->
+    @loadFileSync @interpolate(@fsPath, options)
 
   constructor: (@messages = {}) ->
     pl = RE_PLURAL.exec @messages[""]
