@@ -4,7 +4,8 @@
   "description": "Simple gettext library.",
   "main": "index.js",
   "bin": {
-    "mo2json": "./bin/mo2json"
+    "mo2json": "./bin/mo2json",
+    "mo2json-all": "./bin/mo2json-all"
   },
   "directories": {
     "example": "example"

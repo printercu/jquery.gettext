@@ -1,0 +1,11 @@
+#!/bin/bash
+MO2JSON=$(dirname $0)/mo2json
+dir_lc="$1"
+
+for file in $(find "$dir_lc" -name *.mo)
+do
+  domain=$(basename "$file" .mo)
+  js_file=$(dirname "$file")/$domain.json
+  lang=$(basename $(dirname $(dirname $file)))
+  $MO2JSON "$domain" "$dir_lc" "$lang" > "$js_file"
+done
