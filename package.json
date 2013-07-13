@@ -1,6 +1,6 @@
 {
   "name": "jquery.gettext",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Simple gettext library.",
   "main": "index.coffee",
   "bin": {
